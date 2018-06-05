@@ -1,5 +1,6 @@
 package com.adjuster.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -13,8 +14,12 @@ import javax.persistence.ManyToOne;
 public class Creative {
 	@Id
 	private int id;
+	@Column
 	private int clicks;
+	@Column
 	private int views;
+	@Column
+	private double cpm;
 
 	@ManyToOne
 	private Campaign campaign;
@@ -23,11 +28,12 @@ public class Creative {
 		
 	}	
 
-	public Creative(int id, int clicks, int views) {
+	public Creative(int id, int clicks, int views, double cpm) {
 		super();
 		this.id = id;
 		this.clicks = clicks;
 		this.views = views;
+		this.cpm = cpm;
 	}
 
 	public int getId() {
@@ -54,6 +60,14 @@ public class Creative {
 		this.views = views;
 	}
 
+	public double getCpm() {
+		return cpm;
+	}
+
+	public void setCpm(double cpm) {
+		this.cpm = cpm;
+	}
+
 	public Campaign getCampaign() {
 		return campaign;
 	}
@@ -64,9 +78,8 @@ public class Creative {
 
 	@Override
 	public String toString() {
-		return "Creative [id=" + id + ", clicks=" + clicks + ", views=" + views + "]";
+		return "Creative [id=" + id + ", clicks=" + clicks + ", views=" + views + ", cpm=" + cpm + "]";
 	}
-	
-	
+
 
 }

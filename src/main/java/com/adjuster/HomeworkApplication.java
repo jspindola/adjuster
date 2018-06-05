@@ -102,7 +102,7 @@ public class HomeworkApplication implements CommandLineRunner{
             i = creatives.iterator();
             while (i.hasNext()) {
             	JSONObject creative = (JSONObject)i.next();
-            	Creative crtve = new Creative(id, ((Long)creative.get("clicks")).intValue(), ((Long)creative.get("views")).intValue());
+            	Creative crtve = new Creative(id, ((Long)creative.get("clicks")).intValue(), ((Long)creative.get("views")).intValue(), ((Double)creative.get("cpm")).doubleValue());
             	log.info(crtve.toString());
             	crtveList.add(crtve);
             	id++;
@@ -114,13 +114,15 @@ public class HomeworkApplication implements CommandLineRunner{
 			//
 			// Solution : The file is created and stored in the root directory of the Eclipse
 			//            project.
+	        /////////////////////////////////////////////////////////////////////////////////////
+			// Extra Credit: Revenue is calculated using CPM and views. Using the formula 
+			// CPM*views/1000 please include revenue data at the campaign level in the CSV file.
 			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("creative.csv")));
 			for (Creative c:crtveList) {
-				pw.printf("%d,%d,%d%n", c.getId(), c.getViews(), c.getClicks());
+				pw.printf("%d,%d,%d,%f%n", c.getId(), c.getViews(), c.getClicks(), c.getCpm()*c.getViews()/1000.);
 			}
 			log.info("File 'creative.csv' was written to directory.");
 			pw.close();
-
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
